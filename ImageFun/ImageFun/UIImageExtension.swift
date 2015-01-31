@@ -96,7 +96,7 @@ extension  UIImage {
         let finalcontext = CGBitmapContextCreate(data, pixelsWide, pixelsHigh, CUnsignedLong(8),  CUnsignedLong(bitmapBytesPerRow), colorSpace, bitmapInfo)
         
         let imageRef = CGBitmapContextCreateImage(finalcontext)
-        return UIImage(CGImage: imageRef)
+        return UIImage(CGImage: imageRef, scale: self.scale,orientation: self.imageOrientation)
 
     }
     
@@ -195,7 +195,7 @@ extension  UIImage {
         let finalcontext = CGBitmapContextCreate(data, pixelsWide, pixelsHigh, CUnsignedLong(8),  CUnsignedLong(bitmapBytesPerRow), colorSpace, bitmapInfo)
         
         let imageRef = CGBitmapContextCreateImage(finalcontext)
-        return UIImage(CGImage: imageRef)
+        return UIImage(CGImage: imageRef, scale: self.scale,orientation: self.imageOrientation)
     }
     
     
@@ -253,7 +253,7 @@ extension  UIImage {
         let finalcontext = CGBitmapContextCreate(data, pixelsWide, pixelsHigh, CUnsignedLong(8),  CUnsignedLong(bitmapBytesPerRow), colorSpace, bitmapInfo)
         
         let imageRef = CGBitmapContextCreateImage(finalcontext)
-        return UIImage(CGImage: imageRef)
+        return UIImage(CGImage: imageRef, scale: self.scale,orientation: self.imageOrientation)
     }
     
 }
