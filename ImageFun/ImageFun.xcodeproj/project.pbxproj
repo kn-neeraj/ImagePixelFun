@@ -166,6 +166,8 @@
 		EAB41AC61A11E09E008DFF79 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0720;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Neeraj Kumar";
 				TargetAttributes = {
@@ -417,6 +419,7 @@
 				EAB41AEF1A11E09F008DFF79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EAB41AF01A11E09F008DFF79 /* Build configuration list for PBXNativeTarget "ImageFunTests" */ = {
 			isa = XCConfigurationList;
@@ -425,6 +428,7 @@
 				EAB41AF21A11E09F008DFF79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

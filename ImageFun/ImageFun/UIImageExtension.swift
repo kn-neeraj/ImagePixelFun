@@ -28,19 +28,19 @@ private extension UIImage {
         // Allocate memory for image data. This is the destination in memory
         // where any drawing to the bitmap context will be rendered.
         var bitmapData = UnsafeMutablePointer<UInt8>()
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
+        let bitmapInfo = CGImageAlphaInfo.PremultipliedFirst.rawValue
         
         // Create the bitmap context. We want pre-multiplied ARGB, 8-bits
         // per component. Regardless of what the source image format is
         // (CMYK, Grayscale, and so on) it will be converted over to the format
         // specified here by CGBitmapContextCreate.
-        let context = CGBitmapContextCreate(bitmapData, pixelsWide, pixelsHigh, 8, bitmapBytesPerRow, colorSpace, bitmapInfo)
+        let context = CGBitmapContextCreate(bitmapData, pixelsWide, pixelsHigh, 8, bitmapBytesPerRow, colorSpace, bitmapInfo)!
         
         return context
     }
     
     func sanitizePoint(point:CGPoint) {
-        let inImage:CGImageRef = self.CGImage
+        let inImage:CGImageRef = self.CGImage!
         let pixelsWide = CGImageGetWidth(inImage)
         let pixelsHigh = CGImageGetHeight(inImage)
         let rect = CGRect(x:0, y:0, width:Int(pixelsWide), height:Int(pixelsHigh))
@@ -61,7 +61,7 @@ extension  UIImage {
     */
     func setPixelColorAtPoint(point:CGPoint, color: RawColorType) -> UIImage? {
         self.sanitizePoint(point)
-        let inImage:CGImageRef = self.CGImage
+        let inImage:CGImageRef = self.CGImage!
         let context = self.createARGBBitmapContext(inImage)
         
         let pixelsWide = CGImageGetWidth(inImage)
@@ -88,14 +88,14 @@ extension  UIImage {
         dataType[offset+3] = color.newblueColor
         
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
+        let bitmapInfo = CGImageAlphaInfo.PremultipliedFirst.rawValue
         
         let bitmapBytesPerRow = Int(pixelsWide) * 4
         let bitmapByteCount = bitmapBytesPerRow * Int(pixelsHigh)
         
         let finalcontext = CGBitmapContextCreate(data, pixelsWide, pixelsHigh, 8, bitmapBytesPerRow, colorSpace, bitmapInfo)
         
-        let imageRef = CGBitmapContextCreateImage(finalcontext)
+        let imageRef = CGBitmapContextCreateImage(finalcontext)!
         return UIImage(CGImage: imageRef, scale: self.scale,orientation: self.imageOrientation)
         
     }
@@ -107,7 +107,7 @@ extension  UIImage {
     func getPixelColorAtLocation(point:CGPoint)->UIColor? {
         self.sanitizePoint(point)
         // Create off screen bitmap context to draw the image into. Format ARGB is 4 bytes for each pixel: Alpa, Red, Green, Blue
-        let inImage:CGImageRef = self.CGImage
+        let inImage:CGImageRef = self.CGImage!
         let context = self.createARGBBitmapContext(inImage)
         
         let pixelsWide = CGImageGetWidth(inImage)
@@ -148,7 +148,7 @@ extension  UIImage {
     // Get grayscale image from normal image.
     
     func getGrayScale() -> UIImage? {
-        let inImage:CGImageRef = self.CGImage
+        let inImage:CGImageRef = self.CGImage!
         let context = self.createARGBBitmapContext(inImage)
         let pixelsWide = CGImageGetWidth(inImage)
         let pixelsHigh = CGImageGetHeight(inImage)
@@ -190,11 +190,11 @@ extension  UIImage {
         }
         
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
+        let bitmapInfo = CGImageAlphaInfo.PremultipliedFirst.rawValue
         
         let finalcontext = CGBitmapContextCreate(data, pixelsWide, pixelsHigh, 8,  bitmapBytesPerRow, colorSpace, bitmapInfo)
         
-        let imageRef = CGBitmapContextCreateImage(finalcontext)
+        let imageRef = CGBitmapContextCreateImage(finalcontext)!
         return UIImage(CGImage: imageRef, scale: self.scale,orientation: self.imageOrientation)
     }
     
@@ -207,7 +207,7 @@ extension  UIImage {
     // Provide closure which will return new color value for pixel using any condition you want inside the closure.
     
     func applyOnPixels(closure:ModifyPixelsClosure) -> UIImage? {
-        let inImage:CGImageRef = self.CGImage
+        let inImage:CGImageRef = self.CGImage!
         let context = self.createARGBBitmapContext(inImage)
         let pixelsWide = CGImageGetWidth(inImage)
         let pixelsHigh = CGImageGetHeight(inImage)
@@ -239,7 +239,7 @@ extension  UIImage {
                 let red = dataType[offset+1]
                 let green = dataType[offset+2]
                 let blue = dataType[offset+3]
-                let (newRedColor:UInt8, newGreenColor:UInt8, newBlueColor:UInt8, newAlphaValue:UInt8)  =  closure(point: CGPointMake(CGFloat(x), CGFloat(y)), redColor: red, greenColor: green,  blueColor: blue, alphaValue: alpha)
+                let (newRedColor, newGreenColor, newBlueColor, newAlphaValue): (UInt8, UInt8, UInt8, UInt8)  =  closure(point: CGPointMake(CGFloat(x), CGFloat(y)), redColor: red, greenColor: green,  blueColor: blue, alphaValue: alpha)
                 dataType[offset] = newAlphaValue
                 dataType[offset + 1] = newRedColor
                 dataType[offset + 2] = newGreenColor
@@ -248,11 +248,11 @@ extension  UIImage {
         }
         
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
+        let bitmapInfo = CGImageAlphaInfo.PremultipliedFirst.rawValue
         
         let finalcontext = CGBitmapContextCreate(data, pixelsWide, pixelsHigh, 8,  bitmapBytesPerRow, colorSpace, bitmapInfo)
         
-        let imageRef = CGBitmapContextCreateImage(finalcontext)
+        let imageRef = CGBitmapContextCreateImage(finalcontext)!
         return UIImage(CGImage: imageRef, scale: self.scale,orientation: self.imageOrientation)
     }
     

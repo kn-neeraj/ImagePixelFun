@@ -16,18 +16,18 @@ class ViewController: UIViewController {
         let image:UIImage = UIImage(named: "images.jpeg")!
         
         // Displaying original image.
-        var originalImageView:UIImageView = UIImageView(frame: CGRectMake(20, 20, image.size.width, image.size.height))
+        let originalImageView:UIImageView = UIImageView(frame: CGRectMake(20, 20, image.size.width, image.size.height))
         originalImageView.image = image
         self.view.addSubview(originalImageView)
         
         // GrayScaled image.
-        var imageView:UIImageView = UIImageView(frame: CGRectMake(20, CGRectGetMaxY(originalImageView.frame) + 10, image.size.width, image.size.height))
+        let imageView:UIImageView = UIImageView(frame: CGRectMake(20, CGRectGetMaxY(originalImageView.frame) + 10, image.size.width, image.size.height))
         
         imageView.image = image.getGrayScale()
         self.view.addSubview(imageView)
         
         // Modify image colors.
-        var modifiedImageView:UIImageView = UIImageView(frame: CGRectMake(20, CGRectGetMaxY(imageView.frame) + 10, image.size.width, image.size.height))
+        let modifiedImageView:UIImageView = UIImageView(frame: CGRectMake(20, CGRectGetMaxY(imageView.frame) + 10, image.size.width, image.size.height))
         modifiedImageView.image = image.applyOnPixels({ (point, redColor, greenColor, blueColor, alphaValue) -> (newRedColor: UInt8, newgreenColor: UInt8, newblueColor: UInt8, newalphaValue: UInt8) in
             
              let avg = (UInt32(redColor) + UInt32(greenColor) + UInt32(blueColor))/3
